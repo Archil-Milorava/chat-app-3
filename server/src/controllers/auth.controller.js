@@ -3,9 +3,9 @@ import User from "./../models/user.models.js";
 import bcrypt from "bcryptjs";
 
 export const signUp = async (req, res) => {
-  const { userName, password, gender } = req.body;
+  const { nickName, password } = req.body;
   try {
-    if (!userName || !password || !gender) {
+    if (!nickName || !password) {
       return res.status(400).json({
         message: "All fields are required",
       });
@@ -17,7 +17,7 @@ export const signUp = async (req, res) => {
       });
     }
 
-    const user = await User.findOne({ userName });
+    const user = await User.findOne({ nickName });
 
     if (user) {
       return res.status(400).json({
@@ -29,9 +29,8 @@ export const signUp = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, salt);
 
     const newUser = await User.create({
-      userName,
+      nickName,
       password: hashedPassword,
-      gender,
     });
 
     res.status(201).json({
@@ -44,15 +43,15 @@ export const signUp = async (req, res) => {
 };
 
 export const login = async (req, res) => {
-  const { userName, password } = req.body;
+  const { nickName, password } = req.body;
   try {
-    if (!userName || !password) {
+    if (!nickName || !password) {
       return res.status(400).json({
         message: "all fields are required",
       });
     }
 
-    const user = await User.findOne({ userName });
+    const user = await User.findOne({ nickName });
     const isCorrectPassword = await bcrypt.compare(
       password,
       user?.password || ""

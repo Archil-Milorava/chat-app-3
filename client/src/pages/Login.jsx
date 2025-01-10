@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Input from "../ui/Input";
+import { Link } from "react-router-dom";
 
 const Login = () => {
   const [nickName, setNickname] = useState("");
@@ -33,9 +34,13 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
             className="w-full p-2"
           />
-          <button type="submit">{"Log In"}</button>
+          <button className="text-xl text-black" type="submit">
+            {"Log In"}
+          </button>
         </form>
-        <button>Create Account</button>
+        <Link to="/signup" className="text-black">
+          Create Account
+        </Link>
       </div>
     </main>
   );

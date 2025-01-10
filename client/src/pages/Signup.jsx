@@ -1,13 +1,22 @@
 import { useState } from "react";
 import Input from "./../ui/Input";
 import GenderCheckbox from "../components/GenderCheckbox";
+import { Link, useNavigate } from "react-router-dom";
+import useSignup from "../hooks/useSignup";
 
 const SignUp = () => {
-  const [nickName, setNickname] = useState("");
-  const [password, setPassword] = useState("");
+  const navigate =useNavigate()
+  const [inputs, setInputs] = useState({
+    nickName: "",
+    password: "",
+  });
 
-  const handleSubmit = (e) => {
+  const { loading, signup } = useSignup();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    await signup(inputs);
+    navigate("/login")
   };
 
   return (
@@ -16,30 +25,35 @@ const SignUp = () => {
         className={`bg-[#F5EFE7] w-[30rem] h-[35rem] flex flex-col items-center justify-center space-y-4`}
       >
         <form
-          className="flex flex-col items-center space-y-4 w-3/4"
+          className={`flex flex-col items-center space-y-4 w-3/4 ${
+            loading ? "opacity-20" : ""
+          }`}
           onSubmit={handleSubmit}
         >
           <h2 className="text-2xl font-bold text-gray-700">Register</h2>
           <Input
             type="text"
             placeholder="Nickname"
-            value={nickName}
-            onChange={(e) => setNickname(e.target.value)}
+            value={inputs.nickName}
+            onChange={(e) => setInputs({ ...inputs, nickName: e.target.value })}
             className="w-full p-2"
           />
-
 
           <Input
             type="password"
             placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={inputs.password}
+            onChange={(e) => setInputs({ ...inputs, password: e.target.value })}
             className="w-full p-2"
           />
           <GenderCheckbox />
-          <button type="submit">signup</button>
+          <button type="submit" className="text-black">
+            signup
+          </button>
         </form>
-        <button>Log In</button>
+        <Link to="/login" className="text-black">
+          Log In
+        </Link>
       </div>
     </main>
   );

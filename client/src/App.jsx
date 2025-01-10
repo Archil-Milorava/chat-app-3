@@ -1,3 +1,5 @@
+import { Route, Routes } from "react-router-dom";
+
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import SignUp from "./pages/Signup";
@@ -5,9 +7,11 @@ import SignUp from "./pages/Signup";
 const App = () => {
   return (
     <div className="p-4 h-screen flex items-center justify-center">
-      <Home />
-      {/* <Login /> */}
-      {/* <SignUp /> */}
+      <Routes>
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Home />} />
+      </Routes>
     </div>
   );
 };
