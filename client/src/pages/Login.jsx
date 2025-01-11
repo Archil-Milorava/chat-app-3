@@ -1,13 +1,21 @@
 import { useState } from "react";
-import Input from "../ui/Input";
 import { Link } from "react-router-dom";
+import useLogin from "../hooks/useLogin";
+import Input from "../ui/Input";
 
 const Login = () => {
-  const [nickName, setNickname] = useState("");
-  const [password, setPassword] = useState("");
+  const [inputs, setInputs] = useState({
+    nickName: "",
+    password: "",
+  });
 
-  const handleSubmit = (e) => {
+
+  const { loading, login } = useLogin();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    await login(inputs);
+  
   };
 
   return (
@@ -16,22 +24,24 @@ const Login = () => {
         className={`bg-[#F5EFE7] w-[30rem] h-[35rem] flex flex-col items-center justify-center space-y-4`}
       >
         <form
-          className="flex flex-col items-center space-y-4 w-3/4"
+          className={`flex flex-col items-center space-y-4 w-3/4 ${
+            loading ? "opacity-20" : ""
+          }`}
           onSubmit={handleSubmit}
         >
           <h2 className="text-2xl font-bold text-gray-700">Login</h2>
           <Input
             type="text"
             placeholder="Nickname"
-            value={nickName}
-            onChange={(e) => setNickname(e.target.value)}
+            value={inputs.nickName}
+            onChange={(e) => setInputs({ ...inputs, nickName: e.target.value })}
             className="w-full p-2"
           />
           <Input
             type="password"
             placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={inputs.password}
+            onChange={(e) => setInputs({ ...inputs, password: e.target.value })}
             className="w-full p-2"
           />
           <button className="text-xl text-black" type="submit">

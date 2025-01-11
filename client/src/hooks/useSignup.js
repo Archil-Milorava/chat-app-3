@@ -11,6 +11,7 @@ const useSignup = () => {
       await axios.post("http://localhost:5000/api/v1/auth/signup", inputs, {
         withCredentials: true,
       });
+      toast.success("plese log in")
     } catch (error) {
       setLoading(false);
       toast.error(error.response.data.message);
