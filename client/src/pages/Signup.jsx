@@ -46,7 +46,6 @@ const SignUp = () => {
             onChange={(e) => setInputs({ ...inputs, password: e.target.value })}
             className="w-full p-2"
           />
-          <GenderCheckbox />
           <button type="submit" className="text-black">
             signup
           </button>

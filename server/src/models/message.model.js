@@ -14,7 +14,6 @@ const messageSchema = new mongoose.Schema(
     },
     message: {
       type: String,
-      required: true,
     },
   },
   {
@@ -24,5 +23,4 @@ const messageSchema = new mongoose.Schema(
 
 const Message = mongoose.model("message", messageSchema);
 
-
-export default Message
+export default Message;
